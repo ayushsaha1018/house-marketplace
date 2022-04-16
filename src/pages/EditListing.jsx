@@ -127,7 +127,6 @@ function EditListing() {
     } else {
       geolocation.lat = latitude;
       geolocation.lng = longitude;
-      location = address;
     }
 
     // Store images in firebase
