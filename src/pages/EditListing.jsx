@@ -115,15 +115,28 @@ function EditListing() {
     }
 
     let geolocation = {};
-    let location;
+    let location
 
     if (geoLocationEnabled) {
       const response = await fetch(
-        `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=AIzaSyAqkUYUH32bj90bdF63UmxITpEtyHJlL20`
+        `https://api.mapbox.com/geocoding/v5/mapbox.places/${address}.json?access_token=pk.eyJ1IjoiYXl1c2gxMDE4MjAwMyIsImEiOiJjbDIxeDhpcWcxOW4wM2JtdG9tc3Jmdmw5In0.TCY0eqAVRNa4XGVhwAlU0g`
       );
 
-      const data = response.json();
-      console.log(data);
+      const data = await response.json()
+
+      geolocation.lat = data.results[0]?.geometry.location.lat ?? 0
+      geolocation.lng = data.results[0]?.geometry.location.lng ?? 0
+
+      location =
+        data.status === 'ZERO_RESULTS'
+          ? undefined
+          : data.results[0]?.formatted_address
+
+      if (location === undefined || location.includes('undefined')) {
+        setLoading(false)
+        toast.error('Please enter a correct address')
+        return
+      }
     } else {
       geolocation.lat = latitude;
       geolocation.lng = longitude;
