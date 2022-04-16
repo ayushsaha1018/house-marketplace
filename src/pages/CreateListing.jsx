@@ -87,7 +87,7 @@ function CreateListing() {
     }
 
     let geolocation = {};
-    let location;
+    let location
 
     if (geoLocationEnabled) {
       const response = await fetch(
@@ -112,7 +112,6 @@ function CreateListing() {
     } else {
       geolocation.lat = latitude;
       geolocation.lng = longitude;
-      location = address;
     }
 
     // Store images in firebase
