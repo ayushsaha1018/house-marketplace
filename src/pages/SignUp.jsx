@@ -56,7 +56,9 @@ function SignUp() {
 
       navigate("/");
     } catch (error) {
-      toast.error("Something went wrong with registration")
+      if (password.length < 6)
+        toast.error("Password should be atleast of 6 letters");
+      else toast.error("Bad user credentials");
     }
   };
 
@@ -117,7 +119,7 @@ function SignUp() {
             </div>
           </form>
         </main>
-        <OAuth/>
+        <OAuth />
       </div>
     </>
   );
